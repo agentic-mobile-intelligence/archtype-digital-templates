@@ -1,0 +1,55 @@
+---
+# outline.yaml — canonical book structure.
+#
+# This is the single source of truth for:
+#   - the book's part/chapter structure (Front matter → Parts → Back matter)
+#   - which draft file backs each section
+#   - which patterns live in each chapter (if using patterns.yaml)
+#
+# Sister YAMLs:
+#   - publishing/patterns.yaml  — per-pattern records (if applicable)
+#   - publishing/metadata.yaml  — pandoc/LaTeX publishing metadata
+#
+# When the book structure changes, edit this file first.
+
+generated: 2026-01-01
+
+book:
+  title: "YOUR BOOK TITLE"
+  audience:
+    - "Describe your primary reader here"
+    - "Describe your secondary reader here"
+
+# ── Front matter ──────────────────────────────────────────────────────────────
+front_matter:
+  - id: preface
+    title: "Preface"
+    source_file: drafts/00-preface.md
+    sections:
+      - "Why This Book"
+      - "Who This Book Is For"
+      - "How This Book Is Organized"
+
+  - id: introduction
+    title: "Introduction"
+    source_file: drafts/01-introduction.md
+
+# ── Part 1 ────────────────────────────────────────────────────────────────────
+part_1:
+  title: "Part One Title"
+  divider_file: drafts/01b-part1.md
+
+  chapters:
+    - number: 1
+      title: "Chapter One Title"
+      source_file: drafts/02-ch1.md
+
+    - number: 2
+      title: "Chapter Two Title"
+      source_file: drafts/03-ch2.md
+
+# ── Back matter ───────────────────────────────────────────────────────────────
+back_matter:
+  - id: index
+    title: "Index"
+    source_file: drafts/20-index.md

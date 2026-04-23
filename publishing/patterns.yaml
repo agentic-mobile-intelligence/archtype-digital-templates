@@ -1,0 +1,58 @@
+---
+# patterns.yaml — canonical pattern catalog.
+#
+# Delete this file if your book does not use a pattern catalog.
+# If you do use it, publishing/generate-quick-reference.py reads this file
+# and regenerates drafts/22-pattern-quick-reference.md automatically during
+# build.sh runs.
+#
+# Schema reference:
+#   main_catalog[] — numbered patterns appearing in Part 2 chapters
+#     number        — integer (1, 2, 3...)
+#     name          — pattern name
+#     intent        — one-line intent (used in quick-reference table)
+#     fowler_analog — optional: corresponding pattern from a reference book
+#     chapter       — chapter number this pattern appears in
+#     chapter_title — chapter title
+#     source_file   — draft file path
+#
+#   appendix[]     — patterns with no main-catalog equivalent
+#     id            — string ID (A1, A2...)
+#     name          — pattern name
+#     intent        — one-line intent
+#     source_file   — draft file path
+#
+#   summary{}      — counts (used in generated quick-reference footer)
+
+generated: 2026-01-01
+
+# Optional: the canonical reference work this pattern book is analogous to.
+# Used in the generated quick-reference table header.
+# Set to null to omit the analog column entirely.
+reference_book: null
+# Example:
+# reference_book:
+#   author: "Martin Fowler"
+#   title: "Patterns of Enterprise Application Architecture"
+#   year: 2002
+#   short: "Fowler 2002"
+
+main_catalog:
+  - number: 1
+    name: "Pattern One"
+    intent: "One-line description of what this pattern does."
+    fowler_analog: null
+    chapter: 9
+    chapter_title: "Chapter Nine Title"
+    source_file: drafts/10-ch9-patterns.md
+
+appendix:
+  - id: A1
+    name: "Appendix Pattern One"
+    intent: "One-line description of what this pattern does."
+    source_file: drafts/20-appendix.md
+
+summary:
+  main_catalog_count: 1
+  appendix_count: 1
+  total: 2

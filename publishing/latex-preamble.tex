@@ -1,0 +1,83 @@
+% ──────────────────────────────────────────────────────────────────────────────
+% latex-preamble.tex — injected via --include-in-header
+% eisvogel is called with disable-header-and-footer=true, so scrlayer-scrpage
+% is NOT loaded by the template. We own the entire header/footer setup here.
+% ──────────────────────────────────────────────────────────────────────────────
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+% titlesec not loaded by eisvogel — safe to load
+\usepackage{titlesec}
+
+% ─── Body typography ──────────────────────────────────────────────────────────
+\setlength{\parindent}{0.25in}
+\setlength{\parskip}{0pt}
+
+% ─── Page badge: black rect + downward-pointing triangle ─────────────────────
+\newcommand{\pagebadge}[1]{%
+  \begin{tikzpicture}[baseline=(box.base), inner sep=0pt, outer sep=0pt]
+    \node[
+      fill=black,
+      text=white,
+      font=\fontseries{b}\fontsize{7.5pt}{9pt}\selectfont,
+      inner xsep=5pt,
+      inner ysep=2.5pt,
+      minimum width=22pt,
+      anchor=base
+    ] (box) {#1};
+    \fill[black]
+      (box.south west) --
+      (box.south east) --
+      ($(box.south west)!0.5!(box.south east)+(0,-5.5pt)$) -- cycle;
+  \end{tikzpicture}%
+}
+
+% ─── Running headers (fancyhdr) ───────────────────────────────────────────────
+% Verso (even/left page):  [badge] [CHAPTER NAME small-caps 8pt]  left-aligned
+% Recto (odd/right page):  [SECTION NAME small-caps 8pt] [badge]  right-aligned
+% Footer outer:            watermark text italic 7.5pt
+%
+% Edit \WATERMARK to change the footer text (e.g. "Pre-Release Edition",
+% "Draft", "Confidential", or remove the footer lines entirely).
+\newcommand{\WATERMARK}{Pre-Release Edition}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[EL]{%
+  \pagebadge{\thepage}%
+  \hspace{8pt}%
+  {\fontsize{8pt}{8pt}\selectfont\scshape\nouppercase{\leftmark}}%
+}
+\fancyhead[OR]{%
+  {\fontsize{8pt}{8pt}\selectfont\scshape\nouppercase{\rightmark}}%
+  \hspace{8pt}%
+  \pagebadge{\thepage}%
+}
+\fancyfoot[EL]{\fontsize{7.5pt}{7.5pt}\selectfont\itshape \WATERMARK}
+\fancyfoot[OR]{\fontsize{7.5pt}{7.5pt}\selectfont\itshape \WATERMARK}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Chapter/part opening pages: no header, watermark footer retained
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[EL]{\fontsize{7.5pt}{7.5pt}\selectfont\itshape \WATERMARK}%
+  \fancyfoot[OR]{\fontsize{7.5pt}{7.5pt}\selectfont\itshape \WATERMARK}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+% ─── Section headings: thin rule above (1.1pt), 17pt bold ────────────────────
+\titleformat{\section}{%
+  \titlerule[1.1pt]\vspace{4pt}%
+  \normalfont\fontsize{17pt}{20pt}\selectfont\bfseries%
+}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{0.3in}{0.15in}
+
+% Subsection: 11pt bold, no rule
+\titleformat{\subsection}{%
+  \normalfont\fontsize{11pt}{13pt}\selectfont\bfseries%
+}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}

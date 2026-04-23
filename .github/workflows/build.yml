@@ -1,0 +1,119 @@
+name: Build PDFs
+
+# Trigger on pushes to main, on version tags, and on all pull requests.
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Checkout ────────────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Cache apt packages ───────────────────────────────────────────────────────
+      # Caches the downloaded .deb files so repeat runs skip the network fetch for
+      # packages that haven't changed.
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: apt-${{ runner.os }}-texlive-${{ hashFiles('.github/workflows/build.yml') }}
+          restore-keys: |
+            apt-${{ runner.os }}-texlive-
+
+      # ── Install system dependencies ─────────────────────────────────────────────
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            pandoc \
+            texlive-xetex \
+            texlive-fonts-recommended \
+            texlive-fonts-extra \
+            texlive-latex-extra \
+            texlive-plain-generic \
+            fonts-texgyre \
+            fonts-inconsolata \
+            python3 \
+            python3-yaml
+
+      # ── Install eisvogel template ────────────────────────────────────────────────
+      # Downloads the pinned release tarball and installs the .latex template to
+      # the location pandoc resolves automatically (~/.local/share/pandoc/templates/).
+      - name: Install eisvogel template
+        run: |
+          mkdir -p ~/.local/share/pandoc/templates
+          curl -sSL \
+            https://github.com/Wandmalfarbe/pandoc-latex-template/releases/download/2.4.2/Eisvogel-2.4.2.tar.gz \
+            | tar -xz --wildcards '*.latex' -O \
+            > ~/.local/share/pandoc/templates/eisvogel.latex
+
+      # ── Build KDP PDF ────────────────────────────────────────────────────────────
+      # Runs only the kdp target to keep CI fast. The arxiv target can be added
+      # locally or in a separate workflow job as needed.
+      - name: Build KDP PDF
+        run: bash publishing/build.sh kdp
+
+      # ── Upload PDF artifact ──────────────────────────────────────────────────────
+      # Only upload artifacts on pushes to main, not on pull requests, to avoid
+      # accumulating artifact storage from every PR run.
+      - name: Upload PDFs
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdfs
+          path: published/*.pdf
+          if-no-files-found: error
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore apt cache
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: apt-${{ runner.os }}-${{ hashFiles('.github/workflows/build.yml') }}
+          restore-keys: apt-${{ runner.os }}-
+
+      - name: Install LaTeX + pandoc
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            pandoc texlive-xetex texlive-fonts-recommended \
+            texlive-fonts-extra texlive-latex-extra texlive-plain-generic \
+            fonts-texgyre fonts-inconsolata latexmk python3 python3-yaml
+
+      - name: Install eisvogel template
+        run: |
+          mkdir -p ~/.local/share/pandoc/templates
+          curl -fsSL https://github.com/Wandmalfarbe/pandoc-latex-template/releases/download/2.4.2/Eisvogel-2.4.2.tar.gz \
+            | tar -xz --wildcards '*.latex' -O \
+            > ~/.local/share/pandoc/templates/eisvogel.latex
+
+      - name: Build all targets
+        run: |
+          bash publishing/build.sh all
+          bash publishing/build-arxiv.sh all
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            published/*.pdf
+            published/*.epub
+            published/*.html
+          generate_release_notes: true
+          fail_on_unmatched_files: false

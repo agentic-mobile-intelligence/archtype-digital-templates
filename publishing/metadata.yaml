@@ -1,0 +1,75 @@
+---
+title: "Archetype Digital Templates"
+subtitle: "Managing Upstream and Downstream Change in Template-Driven Development — Pre-Release Preprint"
+author:
+  - name: "Jay Elizaga"
+    affiliation: "elizaga.dev"
+    orcid: ""
+date: "2026"
+# version: "0.1.0"   # Uncomment and set for release builds
+rights: "© 2026 Jay Elizaga. Pre-Release Edition licensed under CC BY 4.0."
+lang: en-US
+subject: "Software Engineering / Template Management"
+keywords:
+  - template-driven development
+  - upstream downstream sync
+  - agentic workflows
+  - software architecture
+
+# ── Publishing metadata (uncomment when ready to submit) ──────────────────────
+# isbn-print:   ""          # 13-digit ISBN for print edition (obtain from bowker.com)
+# isbn-ebook:   ""          # 13-digit ISBN for e-book edition
+# asin:         ""          # Amazon ASIN (assigned after KDP publish)
+# lccn:         ""          # Library of Congress Control Number (loc.gov/publish/pcn/)
+# publisher:    ""          # Publisher name or imprint
+# version:      "0.1.0"     # Semantic version for this edition
+# edition:      "Pre-Release Preprint"
+
+# PDF rendering controls
+colorlinks: true
+linkcolor: NavyBlue
+urlcolor: NavyBlue
+toccolor: black
+numbersections: false
+toc: true
+toc-depth: 2
+lof: false
+lot: false
+
+# LaTeX — 8×10 KDP (geometry set in build.sh; fontsize here is the base)
+top-level-division: chapter
+linestretch: 1.15
+
+# Free fonts — available via texlive-fonts-recommended + fonts-texgyre
+mainfont: "TeX Gyre Pagella"
+sansfont: "TeX Gyre Heros"
+monofont: "Inconsolata"
+monofontoptions:
+  - Scale=0.85
+
+# Code blocks via listings package
+listings: true
+
+# Table overflow mitigation
+header-includes: |
+  \usepackage{booktabs}
+  \usepackage{longtable}
+  \usepackage{adjustbox}
+  \renewenvironment{longtable}
+    {\begin{adjustbox}{max width=\textwidth}\begin{tabular}}
+    {\end{tabular}\end{adjustbox}}
+  \usepackage{listings}
+  \lstset{
+    basicstyle=\small\ttfamily,
+    breaklines=true,
+    breakatwhitespace=false,
+    breakindent=2em,
+    columns=flexible,
+    keepspaces=true,
+    frame=single,
+    framesep=4pt,
+    xleftmargin=8pt,
+    xrightmargin=8pt,
+    aboveskip=8pt,
+    belowskip=8pt
+  }

@@ -1,0 +1,51 @@
+# .pre-commit-config.yaml
+# Install: pip install pre-commit && pre-commit install
+# Run manually: pre-commit run --all-files
+repos:
+  # Standard file hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml
+        name: Validate YAML syntax
+      - id: check-added-large-files
+        name: Block large binary files
+        args: ['--maxkb=500']
+        exclude: '^published/'
+      - id: end-of-file-fixer
+        name: Ensure files end with newline
+        exclude: '^published/'
+      - id: trailing-whitespace
+        name: Remove trailing whitespace
+        args: ['--markdown-linebreak-ext=md']
+      - id: mixed-line-ending
+        name: Normalize line endings
+        args: ['--fix=lf']
+      - id: no-commit-to-branch
+        name: Protect main branch
+        args: ['--branch', 'main']
+
+  # Block unfilled placeholder values
+  - repo: local
+    hooks:
+      - id: no-placeholder-title
+        name: Check for unfilled book title placeholder
+        language: pygrep
+        entry: 'YOUR BOOK TITLE'
+        files: '\.(yaml|yml|md)$'
+        exclude: '^(README\.md|publishing/outline\.yaml|publishing/arxiv-paper/)$'
+
+      - id: no-placeholder-author
+        name: Check for unfilled author placeholder
+        language: pygrep
+        entry: 'Your Name'
+        files: '\.(yaml|yml)$'
+        exclude: '^README\.md$'
+
+      - id: no-pdf-commit
+        name: Block PDF commits (use published/ which is gitignored)
+        language: pygrep
+        entry: ''
+        types: [file]
+        files: '\.pdf$'
+        exclude: '^published/'

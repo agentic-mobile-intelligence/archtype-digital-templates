@@ -1,0 +1,10 @@
+---
+title: "YOUR BOOK TITLE: A Condensed Overview"
+author:
+  - name: "Your Name"
+    affiliation: "your-site.example"
+date: "2026"
+abstract: |
+  Replace this with your abstract.
+lang: en-US
+bibliography: references.bib
