@@ -1,55 +1,148 @@
 ---
-# outline.yaml — canonical book structure.
-#
-# This is the single source of truth for:
-#   - the book's part/chapter structure (Front matter → Parts → Back matter)
-#   - which draft file backs each section
-#   - which patterns live in each chapter (if using patterns.yaml)
-#
-# Sister YAMLs:
-#   - publishing/patterns.yaml  — per-pattern records (if applicable)
-#   - publishing/metadata.yaml  — pandoc/LaTeX publishing metadata
-#
-# When the book structure changes, edit this file first.
-
-generated: 2026-01-01
+generated: 2026-04-23
 
 book:
-  title: "YOUR BOOK TITLE"
+  title: "Archetype Digital Templates"
+  subtitle: "Managing Upstream and Downstream Change in Template-Driven Development"
   audience:
-    - "Describe your primary reader here"
-    - "Describe your secondary reader here"
+    - "Software engineers who maintain or consume shared template repositories"
+    - "Platform engineers and DevEx teams managing template ecosystems"
+    - "Agentic system builders who need reproducible project scaffolds"
 
-# ── Front matter ──────────────────────────────────────────────────────────────
 front_matter:
   - id: preface
     title: "Preface"
     source_file: drafts/00-preface.md
     sections:
-      - "Why This Book"
+      - "Why Templates Break Down Over Time"
       - "Who This Book Is For"
       - "How This Book Is Organized"
 
   - id: introduction
-    title: "Introduction"
+    title: "Introduction: The Drift Problem"
     source_file: drafts/01-introduction.md
+    sections:
+      - "The Fork Moment"
+      - "What Happens Next"
+      - "The Bidirectional Sync Problem"
 
-# ── Part 1 ────────────────────────────────────────────────────────────────────
 part_1:
-  title: "Part One Title"
+  title: "Understanding Template Ecosystems"
   divider_file: drafts/01b-part1.md
-
   chapters:
     - number: 1
-      title: "Chapter One Title"
+      title: "What Makes a Good Template"
       source_file: drafts/02-ch1.md
+      sections:
+        - "Template vs Scaffold vs Boilerplate"
+        - "Stable Tooling, Unstable Content"
+        - "Designing for Downstream Adoption"
 
     - number: 2
-      title: "Chapter Two Title"
+      title: "The Lifecycle of a Template Instance"
       source_file: drafts/03-ch2.md
+      sections:
+        - "Forking vs Cloning vs GitHub Template"
+        - "The Divergence Clock Starts Immediately"
+        - "Mapping What Changes and Why"
 
-# ── Back matter ───────────────────────────────────────────────────────────────
+    - number: 3
+      title: "Upstream and Downstream Defined"
+      source_file: drafts/04-ch3.md
+      sections:
+        - "Who Owns the Archetype"
+        - "What Belongs Upstream vs Downstream"
+        - "The Principle of Minimal Instance Surface"
+
+part_2:
+  title: "Patterns for Managing Change"
+  divider_file: drafts/04b-part2.md
+  chapters:
+    - number: 4
+      title: "Upstream Pinning"
+      source_file: drafts/05-ch4.md
+      sections:
+        - "Tracking a Specific Upstream Ref"
+        - "Intentional Upgrade Ceremonies"
+        - "When to Stay Behind"
+
+    - number: 5
+      title: "Tooling-Layer Separation"
+      source_file: drafts/06-ch5.md
+      sections:
+        - "Separating Build Tools from Content"
+        - "Directory Conventions That Make Sync Easier"
+        - "The publishing/ Directory as a Contract"
+
+    - number: 6
+      title: "Drift Detection"
+      source_file: drafts/07-ch6.md
+      sections:
+        - "What Drift Looks Like in Practice"
+        - "Building a Drift-Check Script"
+        - "CI Integration for Drift Alerts"
+
+    - number: 7
+      title: "The Backport Pattern"
+      source_file: drafts/08-ch7.md
+      sections:
+        - "When Instance Improvements Belong Upstream"
+        - "Structuring Commits for Backportability"
+        - "The Backport PR Workflow"
+
+    - number: 8
+      title: "Agentic Sync Agents"
+      source_file: drafts/09-ch8.md
+      sections:
+        - "Automating Drift Detection with an Agent"
+        - "Proposing Sync PRs Automatically"
+        - "Human-in-the-Loop Approval Gates"
+
+part_3:
+  title: "Building the Template Ecosystem"
+  divider_file: drafts/09b-part3.md
+  chapters:
+    - number: 9
+      title: "Versioning Your Template"
+      source_file: drafts/10-ch9.md
+      sections:
+        - "Semantic Versioning for Templates"
+        - "Changelogs Downstream Can Actually Use"
+        - "Breaking vs Non-Breaking Template Changes"
+
+    - number: 10
+      title: "Multi-Instance Governance"
+      source_file: drafts/11-ch10.md
+      sections:
+        - "Tracking Which Instances Exist"
+        - "Communicating Template Changes to Consumers"
+        - "The Template Registry Pattern"
+
+    - number: 11
+      title: "Template Testing"
+      source_file: drafts/12-ch11.md
+      sections:
+        - "Testing the Template Itself"
+        - "Smoke Tests for Downstream Instances"
+        - "Validating Sync Did Not Break Anything"
+
+    - number: 12
+      title: "Agentic Template Generation"
+      source_file: drafts/13-ch12.md
+      sections:
+        - "Generating Template Instances with Agents"
+        - "Agent-Driven Customization at Fork Time"
+        - "Keeping Agents Synchronized with Template Versions"
+
 back_matter:
+  - id: appendix_a
+    title: "Appendix A: The template-start-from-here Reference"
+    source_file: drafts/18-appendixA.md
+
+  - id: closing
+    title: "Closing: The Living Template"
+    source_file: drafts/19-closing.md
+
   - id: index
     title: "Index"
     source_file: drafts/20-index.md
