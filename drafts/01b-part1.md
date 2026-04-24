@@ -1,8 +1,8 @@
 ---
-title: "Part One Title"
+title: "Part I: Understanding Template Ecosystems"
 chapter: part-divider
 ---
 
-# Part One Title
+# Part I: Understanding Template Ecosystems
 
-<!-- Part divider page. Brief overview of what this part covers. -->
+Before we can manage change across templates and their instances, we need a shared vocabulary. What is a template? What happens when you fork one? Who owns what? Part I answers these foundational questions.

@@ -76,8 +76,22 @@ DRAFT_FILES=(
   "$DRAFTS_DIR/01b-part1.md"
   "$DRAFTS_DIR/02-ch1.md"
   "$DRAFTS_DIR/03-ch2.md"
-  # Add more chapters here...
+  "$DRAFTS_DIR/04-ch3.md"
+  "$DRAFTS_DIR/04b-part2.md"
+  "$DRAFTS_DIR/05-ch4.md"
+  "$DRAFTS_DIR/06-ch5.md"
+  "$DRAFTS_DIR/07-ch6.md"
+  "$DRAFTS_DIR/08-ch7.md"
+  "$DRAFTS_DIR/09-ch8.md"
+  "$DRAFTS_DIR/09b-part3.md"
+  "$DRAFTS_DIR/10-ch9.md"
+  "$DRAFTS_DIR/11-ch10.md"
+  "$DRAFTS_DIR/12-ch11.md"
+  "$DRAFTS_DIR/13-ch12.md"
+  "$DRAFTS_DIR/18-appendixA.md"
+  "$DRAFTS_DIR/19-closing.md"
   "$DRAFTS_DIR/20-index.md"
+  "$DRAFTS_DIR/22-pattern-quick-reference.md"
 )
 
 validate_files() {
